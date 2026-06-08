@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDENINE — dust particles from a forbidden star</title>
+<meta name="description" content="Medenine. Composer, producer, modular synthesist. New album: dust particles from a forbidden star.">
+
+<!--
+================================================================================
+  MEDENINE — QUICK-EDIT GUIDE
+  --------------------------------------------------------------------------
+  ALREADY WIRED (your real links): Bandcamp, Instagram, YouTube, Apple Music,
+  GitHub, Linktree.
+  REPLACE THESE PLACEHOLDERS:
+    • Album URL ....... search  ALBUM_URL  -> your Bandcamp release link
+    • Release status .. search  OUT NOW  -> change to a date if pre-release
+    • Tracklist ....... see  <!-- TRACKLIST -->  (placeholder titles)
+    • Bandcamp embed .. see  <!-- BANDCAMP EMBED -->  (paste your iframe)
+    • Smart Batch repo  search  REPO_URL  -> exact GitHub repo
+    • Discord ......... search  DISCORD_URL
+    • Email ........... search  you@medenine
+  RE-SKIN: change --amber / --rust / --bg in the :root block.
+================================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0c0908;
+  --bg2:#14100c;
+  --ink:#f1e7d8;
+  --muted:#8f8170;
+  --amber:#f3a531;
+  --rust:#c1431f;
+  --ember:#ff7a3c;
+  --line:#2c2118;
+  --line2:#3a2c1f;
+  --display:"Archivo Black",sans-serif;
+  --mono:"JetBrains Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--mono);font-weight:300;line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ember);color:#000}
+img{max-width:100%;display:block}
+
+/* ---- film grain + scanlines + warm vignette ---- */
+.grain{position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grainShift 1.2s steps(3) infinite;}
+@keyframes grainShift{0%{transform:translate(0,0)}33%{transform:translate(-4%,3%)}66%{transform:translate(3%,-2%)}100%{transform:translate(0,0)}}
+.scan{position:fixed;inset:0;z-index:89;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.18) 3px,transparent 4px);}
+.vignette{position:fixed;inset:0;z-index:88;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 30%,transparent 40%,rgba(0,0,0,.55) 100%);}
+
+/* ---------- HEADER ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:80;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;border-bottom:1px solid var(--line);
+  background:rgba(12,9,8,.82);backdrop-filter:blur(6px);}
+.brand{display:flex;flex-direction:column;line-height:1}
+.brand .nm{font-family:var(--display);font-size:15px;letter-spacing:.04em}
+.brand .sub{font-size:9px;letter-spacing:.32em;color:var(--amber);margin-top:4px}
+nav{display:flex;gap:26px;align-items:center}
+nav a{font-size:11px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;position:relative;transition:color .2s}
+nav a::before{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--amber);transition:width .25s}
+nav a:hover{color:var(--ink)}nav a:hover::before{width:100%}
+.menu-btn{display:none;background:none;border:1px solid var(--line2);color:var(--ink);width:38px;height:34px;font-size:18px;cursor:pointer}
+
+/* ---------- TICKER ---------- */
+.ticker{position:fixed;top:63px;left:0;right:0;z-index:78;
+  border-bottom:1px solid var(--line);background:var(--rust);color:#0c0908;
+  overflow:hidden;white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.22em}
+.ticker .run{display:inline-block;padding:7px 0;animation:scroll 28s linear infinite}
+.ticker .run span{margin:0 26px;text-transform:uppercase}
+.ticker .run b{color:#0c0908}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;padding:150px 22px 70px;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+#dust{position:absolute;inset:0;z-index:0}
+.hero-glow{position:absolute;top:18%;left:50%;transform:translateX(-50%);
+  width:80vw;max-width:900px;height:520px;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(243,165,49,.18),rgba(193,67,31,.06) 45%,transparent 72%);
+  filter:blur(20px);animation:pulse 9s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+.hero-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%}
+.hero .tagrow{display:flex;gap:14px;align-items:center;font-size:10px;letter-spacing:.28em;color:var(--amber);text-transform:uppercase;margin-bottom:22px}
+.hero .tagrow .dot{width:7px;height:7px;background:var(--ember);border-radius:50%;animation:blink 1.4s steps(2) infinite}
+@keyframes blink{50%{opacity:.2}}
+.hero .tagrow .ln{flex:1;height:1px;background:var(--line2)}
+
+/* glitch title */
+.glitch{font-family:var(--display);font-size:clamp(40px,9.2vw,138px);line-height:.9;
+  letter-spacing:-.01em;text-transform:uppercase;position:relative;color:var(--ink);max-width:14ch}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}
+.glitch::before{color:var(--rust);transform:translate(-3px,0);clip-path:inset(0 0 55% 0);animation:gl1 4s infinite steps(2) alternate-reverse;mix-blend-mode:screen}
+.glitch::after{color:var(--amber);transform:translate(3px,0);clip-path:inset(60% 0 0 0);animation:gl2 5.5s infinite steps(2) alternate-reverse;mix-blend-mode:screen}
+@keyframes gl1{0%,92%{clip-path:inset(0 0 55% 0);transform:translate(-3px,0)}94%{clip-path:inset(10% 0 70% 0);transform:translate(-7px,2px)}96%{clip-path:inset(40% 0 30% 0);transform:translate(5px,-2px)}100%{clip-path:inset(0 0 55% 0);transform:translate(-3px,0)}}
+@keyframes gl2{0%,90%{clip-path:inset(60% 0 0 0);transform:translate(3px,0)}93%{clip-path:inset(75% 0 5% 0);transform:translate(8px,-2px)}97%{clip-path:inset(30% 0 50% 0);transform:translate(-5px,2px)}100%{clip-path:inset(60% 0 0 0);transform:translate(3px,0)}}
+
+.hero-meta{display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border:1px solid var(--line2);max-width:760px}
+.hero-meta .cell{flex:1;min-width:140px;padding:14px 18px;border-right:1px solid var(--line2)}
+.hero-meta .cell:last-child{border-right:none}
+.hero-meta .k{font-size:9px;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
+.hero-meta .v{font-size:13px;color:var(--ink);margin-top:6px;letter-spacing:.04em}
+.hero-meta .v.amb{color:var(--amber)}
+
+.cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  padding:15px 26px;cursor:pointer;border:1px solid;transition:transform .12s,background .2s,color .2s;display:inline-block}
+.btn:active{transform:translate(2px,2px)}
+.btn-amber{background:var(--amber);color:#0c0908;border-color:var(--amber)}
+.btn-amber:hover{background:var(--ember);border-color:var(--ember)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+
+/* ---------- SECTION SHELL ---------- */
+.sec{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:90px 22px;border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:40px;flex-wrap:wrap}
+.idx{font-family:var(--display);font-size:13px;color:var(--rust)}
+.sec h2{font-family:var(--display);font-size:clamp(24px,4.6vw,46px);text-transform:uppercase;letter-spacing:-.01em}
+.sec .note{font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-left:auto}
+
+/* album block */
+.album-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}
+.cover{position:relative;border:1px solid var(--line2);aspect-ratio:1;
+  background:linear-gradient(135deg,#1a130c,#0c0908);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cover .ring{position:absolute;border:1px solid var(--amber);border-radius:50%;opacity:.22}
+.cover .lbl{position:relative;z-index:2;text-align:center;padding:20px}
+.cover .lbl .t{font-family:var(--display);font-size:clamp(18px,3vw,30px);color:var(--ink);line-height:1;text-transform:uppercase}
+.cover .lbl .s{font-size:10px;letter-spacing:.3em;color:var(--amber);margin-top:14px;text-transform:uppercase}
+.cover .tag{position:absolute;top:0;left:0;background:var(--rust);color:#0c0908;font-weight:700;font-size:10px;letter-spacing:.2em;padding:6px 12px;z-index:3}
+.album-desc p{font-size:14px;color:#cdbfae;margin-bottom:16px;max-width:46ch}
+/* tracklist */
+.tracks{margin-top:24px;border-top:1px solid var(--line)}
+.track{display:flex;align-items:center;gap:16px;padding:13px 4px;border-bottom:1px solid var(--line);
+  transition:padding-left .2s,background .2s;position:relative}
+.track:hover{padding-left:14px;background:rgba(243,165,49,.05)}
+.track .n{font-size:11px;color:var(--rust);width:26px;font-weight:700}
+.track .tt{font-size:13px;letter-spacing:.03em;flex:1}
+.track .dur{font-size:11px;color:var(--muted)}
+.track:hover .tt{color:var(--amber)}
+.embed-wrap{margin-top:26px;border:1px solid var(--line2);padding:16px;background:var(--bg2)}
+.embed-wrap .ph{aspect-ratio:16/6;display:flex;align-items:center;justify-content:center;
+  border:1px dashed var(--line2);color:var(--muted);font-size:11px;letter-spacing:.14em;text-align:center;padding:20px}
+
+/* music grid */
+.discog{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0;border:1px solid var(--line)}
+.rel{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px;
+  transition:background .25s;position:relative;min-height:200px;display:flex;flex-direction:column}
+.rel:hover{background:var(--bg2)}
+.rel .yr{font-size:10px;letter-spacing:.2em;color:var(--muted)}
+.rel .rt{font-family:var(--display);font-size:18px;margin:auto 0 8px;text-transform:uppercase;line-height:1}
+.rel .gn{font-size:11px;color:var(--muted)}
+.rel .go{font-size:10px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;margin-top:14px}
+.rel:hover .go{color:var(--ember)}
+
+/* tools */
+.tool{border:1px solid var(--line2);padding:30px;display:flex;gap:24px;flex-wrap:wrap;
+  align-items:center;justify-content:space-between;transition:border-color .25s;background:var(--bg2)}
+.tool:hover{border-color:var(--amber)}
+.tool+.tool{margin-top:16px}
+.tool .meta{flex:1;min-width:260px}
+.tool .badge{display:inline-block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);
+  border:1px solid var(--amber);padding:3px 9px;margin-bottom:14px}
+.tool .badge.soon{color:var(--muted);border-color:var(--line2)}
+.tool h3{font-family:var(--display);font-size:19px;margin-bottom:8px;text-transform:uppercase}
+.tool p{font-size:13px;color:var(--muted);max-width:560px}
+.tool .links{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}
+
+/* about */
+.about{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:start}
+.about p{font-size:14.5px;color:#cdbfae;margin-bottom:18px}
+.gear{border:1px solid var(--line2);padding:22px}
+.gear .gl{font-size:9px;letter-spacing:.24em;color:var(--amber);text-transform:uppercase;margin-bottom:16px}
+.gear .gi{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--line)}
+.gear .gi:last-child{border-bottom:none}
+.gear .gi b{color:var(--ink);font-weight:500}
+
+/* footer */
+footer{position:relative;z-index:2;border-top:1px solid var(--rust);padding:50px 22px 36px;max-width:1180px;margin:0 auto}
+.foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;align-items:flex-end}
+.foot-top .big{font-family:var(--display);font-size:clamp(30px,7vw,72px);text-transform:uppercase;line-height:.85}
+.foot-links{display:flex;flex-direction:column;gap:8px;text-align:right}
+.foot-links a{font-size:12px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;transition:color .2s}
+.foot-links a:hover{color:var(--amber)}
+.foot-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:40px;
+  padding-top:18px;border-top:1px solid var(--line);font-size:10px;letter-spacing:.16em;color:#5a5044;text-transform:uppercase}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+
+/* corner coordinate flourishes */
+.coord{position:fixed;font-size:9px;letter-spacing:.2em;color:#473b2e;z-index:77;text-transform:uppercase}
+.coord.bl{bottom:14px;left:14px}.coord.br{bottom:14px;right:14px}
+
+@media (max-width:860px){
+  .album-grid,.about{grid-template-columns:1fr}
+  .coord{display:none}
+}
+@media (max-width:720px){
+  nav{position:fixed;inset:0;background:rgba(8,6,5,.98);flex-direction:column;justify-content:center;
+       gap:32px;transform:translateX(100%);transition:transform .35s;z-index:79}
+  nav.open{transform:none}nav a{font-size:16px}
+  .menu-btn{display:block;z-index:81}
+  .hero-meta .cell{min-width:50%;border-bottom:1px solid var(--line2)}
+  .sec{padding:64px 18px}
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="scan"></div>
+<div class="vignette"></div>
+<div class="coord bl">38.90°N 77.03°W · WASHINGTON DC</div>
+<div class="coord br">MEDENINE · EST. MMXX · v1.0</div>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <a href="#top" class="brand">
+    <span class="nm">MEDENINE</span>
+    <span class="sub">MODULAR / SYNTHWAVE / GLITCH</span>
+  </a>
+  <button class="menu-btn" aria-label="Menu" onclick="document.getElementById('nav').classList.toggle('open')">≡</button>
+  <nav id="nav">
+    <a href="#album" onclick="closeNav()">EP</a>
+    <a href="#music" onclick="closeNav()">Music</a>
+    <a href="#tools" onclick="closeNav()">Tools</a>
+    <a href="#about" onclick="closeNav()">About</a>
+  </nav>
+</header>
+
+<!-- ===================== TICKER ===================== -->
+<div class="ticker">
+  <div class="run">
+    <span>★ NEW EP <b>DUST PARTICLES FROM A FORBIDDEN STAR</b></span>
+    <span>OUT NOW</span>
+    <span>LISTEN ON BANDCAMP</span>
+    <span>★ NEW EP <b>DUST PARTICLES FROM A FORBIDDEN STAR</b></span>
+    <span>OUT NOW</span>
+    <span>LISTEN ON BANDCAMP</span>
+  </div>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<a id="top"></a>
+<section class="hero">
+  <canvas id="dust"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="tagrow rv">
+      <span class="dot"></span>
+      <span>New Release · EP</span>
+      <span class="ln"></span>
+      <span>FILE 001 / FORBIDDEN_STAR</span>
+    </div>
+
+    <h1 class="glitch rv" data-text="DUST PARTICLES FROM A FORBIDDEN STAR">DUST PARTICLES FROM A FORBIDDEN STAR</h1>
+
+    <div class="hero-meta rv">
+      <div class="cell"><div class="k">Artist</div><div class="v">Medenine</div></div>
+      <div class="cell"><div class="k">Format</div><div class="v">EP · Digital</div></div>
+      <div class="cell"><div class="k">Status</div><div class="v amb">OUT NOW</div></div>
+      <div class="cell"><div class="k">Field</div><div class="v">Ambient glitch / synthwave</div></div>
+    </div>
+
+    <div class="cta rv">
+      <!-- ALBUM_URL: swap to the specific Bandcamp release link when live -->
+      <a href="https://medenine.bandcamp.com/" target="_blank" rel="noopener" class="btn btn-amber">Listen on Bandcamp</a>
+      <a href="#album" class="btn btn-ghost">Tracklist + Stream</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ALBUM ===================== -->
+<section class="sec" id="album">
+  <div class="sec-head">
+    <span class="idx">01</span>
+    <h2>The EP</h2>
+    <span class="note">dust particles from a forbidden star</span>
+  </div>
+
+  <div class="album-grid">
+    <div class="cover rv">
+      <span class="tag">OUT NOW</span>
+      <div class="ring" style="width:62%;height:62%"></div>
+      <div class="ring" style="width:80%;height:80%"></div>
+      <div class="ring" style="width:96%;height:96%"></div>
+      <div class="lbl">
+        <div class="t">Dust Particles<br>From a<br>Forbidden Star</div>
+        <div class="s">Medenine · EP</div>
+      </div>
+      <!-- swap the whole .cover block for: <img src="cover.jpg" alt="album cover"> -->
+    </div>
+
+    <div class="album-desc rv">
+      <p>This EP came about for a live set in the Neptune Room, Washington DC in July 2025. It was the result of one of two projects over this summer: 1. to make people dance and feel joy during a time of worry about the world, and 2) to create a dystopian cyberscape to reflect my feelings about the world and where it is going.</p>
+      <p>With more generative AI being used to replace human output, the virtual world feels more than ever like a paranoid hall of smoke and mirrors, where we have to ask the question: what is real? What is AI generated? Does it matter? If we want to discern truth over spectacle, to stand up for what is just, to create an ethics of care for this planet and all its inhabitants, then it does matter. If we want to turn into braindead endlessly entertained consumers then it doesn't.</p>
+
+      <!-- TRACKLIST -->
+      <div class="tracks">
+        <div class="track"><span class="n">01</span><span class="tt">Dust</span><span class="dur">6:33</span></div>
+        <div class="track"><span class="n">02</span><span class="tt">Particles</span><span class="dur">9:11</span></div>
+        <div class="track"><span class="n">03</span><span class="tt">Forbidden</span><span class="dur">8:38</span></div>
+        <div class="track"><span class="n">04</span><span class="tt">Star</span><span class="dur">5:59</span></div>
+      </div>
+
+      <!-- BANDCAMP EMBED: on Bandcamp click Share/Embed, copy the iframe, paste it here over the .ph block -->
+      <div class="embed-wrap">
+        <div class="ph">PASTE YOUR BANDCAMP PLAYER EMBED HERE<br>(Bandcamp → Share / Embed → copy iframe)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MUSIC ===================== -->
+<section class="sec" id="music">
+  <div class="sec-head">
+    <span class="idx">02</span>
+    <h2>Discography</h2>
+    <span class="note">Selected releases</span>
+  </div>
+  <div class="discog">
+    <a href="https://medenine.bandcamp.com/" target="_blank" rel="noopener" class="rel rv">
+      <div class="yr">2025 · EP</div>
+      <div class="rt">Dust Particles From a Forbidden Star</div>
+      <div class="gn">Ambient glitch / synthwave</div>
+      <div class="go">Listen →</div>
+    </a>
+    <a href="https://music.apple.com/us/album/chimaera/1542047408" target="_blank" rel="noopener" class="rel rv">
+      <div class="yr">2020 · LP</div>
+      <div class="rt">Chimaera</div>
+      <div class="gn">10 tracks</div>
+      <div class="go">Apple Music →</div>
+    </a>
+    <a href="https://medenine.bandcamp.com/" target="_blank" rel="noopener" class="rel rv">
+      <div class="yr">Catalogue</div>
+      <div class="rt">Full Discography</div>
+      <div class="gn">Every release, on Bandcamp</div>
+      <div class="go">Browse →</div>
+    </a>
+    <a href="https://youtube.com/channel/UCfdPIDbPTBmLRni7M1VwaQA?sub_confirmation=1" target="_blank" rel="noopener" class="rel rv">
+      <div class="yr">Video</div>
+      <div class="rt">YouTube</div>
+      <div class="gn">Live sets + visuals</div>
+      <div class="go">Watch →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ===================== TOOLS ===================== -->
+<section class="sec" id="tools">
+  <div class="sec-head">
+    <span class="idx">03</span>
+    <h2>Tools for Ableton</h2>
+    <span class="note">Free + open source</span>
+  </div>
+  <p style="font-size:14px;color:#cdbfae;max-width:60ch;margin-bottom:32px" class="rv">Same hands, different output. When Ableton Live gets in the way of finishing a track, I build something to fix it and give it away.</p>
+
+  <div class="tool rv">
+    <div class="meta">
+      <span class="badge">Available now</span>
+      <h3>Smart Batch Exporter</h3>
+      <p>Bulk export stems, clips, and arrangements straight from Ableton Live. Built in TypeScript on the official extensions SDK. Free and open source.</p>
+    </div>
+    <div class="links">
+      <!-- REPO_URL: point to the exact repo when ready -->
+      <a href="https://github.com/nejben77" target="_blank" rel="noopener" class="btn btn-amber">GitHub</a>
+      <!-- DISCORD_URL -->
+      <a href="#" target="_blank" rel="noopener" class="btn btn-ghost">Discord</a>
+    </div>
+  </div>
+
+  <div class="tool rv">
+    <div class="meta">
+      <span class="badge soon">In development</span>
+      <h3>Selected-Clips Export</h3>
+      <p>A focused export action wired into the arrangement context menu. Coming soon.</p>
+    </div>
+    <div class="links">
+      <a href="https://github.com/nejben77" target="_blank" rel="noopener" class="btn btn-ghost">Follow on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="sec" id="about">
+  <div class="sec-head">
+    <span class="idx">04</span>
+    <h2>About</h2>
+    <span class="note">Washington DC</span>
+  </div>
+  <div class="about">
+    <div class="rv">
+      <p>Medenine is a composer, producer, and modular synthesist working between nostalgic synthwave and contemporary ambient glitch. The music runs from uptempo, energetic dance to downtempo ambient dub, built around a hands-on hardware studio.</p>
+      <p>The tools come from the same practice. The records and the software are two outputs of one workflow, both shaped by a love of texture, repetition, and machines pushed slightly past their intent.</p>
+    </div>
+    <div class="gear rv">
+      <div class="gl">Core Setup</div>
+      <div class="gi"><span>Sequencing</span><b>OXI One MKII</b></div>
+      <div class="gi"><span>Poly synth</span><b>Prophet 5</b></div>
+      <div class="gi"><span>Mono synth</span><b>Subsequent 37</b></div>
+      <div class="gi"><span>Expressive</span><b>Osmose</b></div>
+      <div class="gi"><span>DAW</span><b>Ableton Live</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="foot-top">
+    <div class="big">Listen<br>Closely.</div>
+    <div class="foot-links">
+      <a href="https://medenine.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a>
+      <a href="https://www.instagram.com/medenine_music/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://youtube.com/channel/UCfdPIDbPTBmLRni7M1VwaQA?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://music.apple.com/us/album/chimaera/1542047408" target="_blank" rel="noopener">Apple Music</a>
+      <a href="https://github.com/nejben77" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linktr.ee/Medenine" target="_blank" rel="noopener">All Links</a>
+      <a href="mailto:you@medenine.com">Contact</a>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© <span id="yr"></span> Medenine</span>
+    <span>Composer · Producer · Modular Synthesist</span>
+    <span>Built in DC</span>
+  </div>
+</footer>
+
+<script>
+  function closeNav(){document.getElementById('nav').classList.remove('open')}
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  /* reveal on scroll */
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%5*0.07)+'s';io.observe(el)});
+
+  /* dust particle field */
+  const cv=document.getElementById('dust'),ctx=cv.getContext('2d');
+  let w,h,dpr,parts=[];
+  const COLORS=['243,165,49','193,67,31','255,122,60'];
+  function size(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    w=cv.clientWidth;h=cv.clientHeight;
+    cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.min(110,Math.floor(w*h/14000));
+    parts=Array.from({length:n},()=>spawn());
+  }
+  function spawn(){
+    return{x:Math.random()*w,y:Math.random()*h,
+      r:Math.random()*1.8+.3,
+      vx:(Math.random()-.5)*.18,vy:-(Math.random()*.25+.05),
+      a:Math.random()*.5+.1,c:COLORS[Math.floor(Math.random()*COLORS.length)],
+      tw:Math.random()*Math.PI*2};
+  }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of parts){
+      p.x+=p.vx;p.y+=p.vy;p.tw+=.03;
+      if(p.y<-10){p.y=h+10;p.x=Math.random()*w}
+      if(p.x<-10)p.x=w+10;if(p.x>w+10)p.x=-10;
+      const al=p.a*(0.6+0.4*Math.sin(p.tw));
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba('+p.c+','+al+')';ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  size();frame();
+  let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(size,200)});
+</script>
+</body>
+</html>
